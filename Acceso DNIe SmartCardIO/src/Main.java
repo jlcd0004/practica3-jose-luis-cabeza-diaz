@@ -28,17 +28,21 @@ public class Main {
         ByteArrayInputStream bais=null;
        //read("cert.cer");
        
-       FileInputStream fis = new FileInputStream("cert.cer");
+      /* FileInputStream fis = new FileInputStream("cert.cer");
       
        
        byte value[] = new byte[fis.available()];
          fis.read(value);
-        bais = new ByteArrayInputStream(value);
+        bais = new ByteArrayInputStream(value);*/
 
         //TODO: Obtener los datos del DNIe
         ObtenerDatos od = new ObtenerDatos();
         String nif = od.LeerNIF();
+        String nomAp = od.LeerNombreApell();
+        String user = od.usuario(nomAp);
         System.out.println("NIF: "+nif);
+        System.out.println("Nombre: "+nomAp);
+        System.out.println("Usuario: "+user);
         //TODO: Autenticarse en el servidor
         
     
