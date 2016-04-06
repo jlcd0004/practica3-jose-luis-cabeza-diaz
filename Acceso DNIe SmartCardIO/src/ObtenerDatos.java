@@ -6,12 +6,16 @@
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.smartcardio.*;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
+import javax.xml.bind.DatatypeConverter;
 
 /**
  * La clase ObtenerDatos implementa cuatro métodos públicos que permiten obtener
@@ -33,16 +37,35 @@ public class ObtenerDatos {
     public ObtenerDatos() {
     }
 
-    public String usuario(String nombApell){
-    String user = null;
-    
+    public String hashSha1(String input) throws NoSuchAlgorithmException {
+        MessageDigest mDigest = MessageDigest.getInstance("SHA1");
+        byte[] result = mDigest.digest(input.getBytes());
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < result.length; i++) {
+            sb.append(Integer.toString((result[i] & 0xff) + 0x100, 16).substring(1));
+        }
+
+        return sb.toString();
+    }
+
+    public String base64(String hash) throws UnsupportedEncodingException {
+        byte[] mens = hash.getBytes("UTF-8");
+        String codificado = DatatypeConverter.printBase64Binary(mens);
+
+        return codificado;
+    }
+
+    public String usuario(String nombApell) {
+        String user = null;
+
         user = Character.toString(nombApell.charAt(13));
         user = user.concat(nombApell.substring(0, 6));
         user = user.concat(Character.toString(nombApell.charAt(7)));
-        
-    return user;
-    
+
+        return user;
+
     }
+
     public String LeerNIF() {
         String nif = null;
         try {
@@ -64,8 +87,8 @@ public class ObtenerDatos {
         }
         return nif;
     }
-    
-     public String LeerNombreApell() {
+
+    public String LeerNombreApell() {
         String nomAp = null;
         try {
             Card c = ConexionTarjeta();
@@ -86,7 +109,8 @@ public class ObtenerDatos {
         }
         return nomAp;
     }
-public String leerDeCertificadoNombre(CardChannel ch) throws CardException {
+
+    public String leerDeCertificadoNombre(CardChannel ch) throws CardException {
         int offset = 0;
         String completName = null;
 
@@ -135,9 +159,6 @@ public String leerDeCertificadoNombre(CardChannel ch) throws CardException {
                 //El certificado empieza aquí
                 byte[] r3 = new byte[23];
 
-                
-                
-                
                 //Nos posicionamos en el byte donde empieza el nombre y leemos sus 23 bytes
                 for (int z = 0; z < 23; z++) {
                     r3[z] = datos[166 + z];
@@ -147,7 +168,6 @@ public String leerDeCertificadoNombre(CardChannel ch) throws CardException {
         }
         return completName;
     }
-  
 
     public String leerDeCertificado(CardChannel ch) throws CardException {
         int offset = 0;
@@ -198,9 +218,6 @@ public String leerDeCertificadoNombre(CardChannel ch) throws CardException {
                 //El certificado empieza aquí
                 byte[] r3 = new byte[9];
 
-                
-                
-                
                 //Nos posicionamos en el byte donde empieza el NIF y leemos sus 9 bytes
                 for (int z = 0; z < 9; z++) {
                     r3[z] = datos[109 + z];
@@ -210,8 +227,6 @@ public String leerDeCertificadoNombre(CardChannel ch) throws CardException {
         }
         return completName;
     }
-
-   
 
     /**
      * Este método establece la conexión con la tarjeta. La función busca el

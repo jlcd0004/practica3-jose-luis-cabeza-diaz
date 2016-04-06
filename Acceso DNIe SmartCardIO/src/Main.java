@@ -1,19 +1,11 @@
 
-
-import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-
+import java.util.Scanner;
+import javax.xml.bind.DatatypeConverter;
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
-
 
 /**
  *
@@ -24,28 +16,30 @@ public class Main {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws Exception{
-        ByteArrayInputStream bais=null;
-       //read("cert.cer");
-       
-      /* FileInputStream fis = new FileInputStream("cert.cer");
-      
-       
-       byte value[] = new byte[fis.available()];
-         fis.read(value);
-        bais = new ByteArrayInputStream(value);*/
-
-        //TODO: Obtener los datos del DNIe
+    public static void main(String[] args) throws Exception {
+        
+        Scanner scan = new Scanner(System.in);
         ObtenerDatos od = new ObtenerDatos();
+        
         String nif = od.LeerNIF();
         String nomAp = od.LeerNombreApell();
         String user = od.usuario(nomAp);
-        System.out.println("NIF: "+nif);
-        System.out.println("Nombre: "+nomAp);
-        System.out.println("Usuario: "+user);
-        //TODO: Autenticarse en el servidor
         
-    
+        System.out.println("NIF: " + nif);
+        System.out.println("Nombre: " + nomAp);
+        System.out.println("Usuario: " + user);
+        
+        System.out.println("\nIntroduzca su clave: ");
+        String key = scan.nextLine();
+        
+        String datos = "user="+user+"&dni="+nif+"&password="+key;
+          System.out.println(datos);      
+        String hash = od.hashSha1(datos);       
+        System.out.println(hash);
+        
+        String codificado = od.base64(hash);
+        System.out.println(codificado);
+
     }
 
 }
