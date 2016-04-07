@@ -17,29 +17,35 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws Exception {
-        
+
         Scanner scan = new Scanner(System.in);
         ObtenerDatos od = new ObtenerDatos();
-        
-        String nif = od.LeerNIF();
-        String nomAp = od.LeerNombreApell();
-        String user = od.usuario(nomAp);
-        
+        String user, nif, nomAp, key, datos, hash, datosEnviar, user64, nif64, hash64;
+
+        nif = od.LeerNIF();
+        nomAp = od.LeerNombreApell();
+        user = od.usuario(nomAp);
+
         System.out.println("NIF: " + nif);
         System.out.println("Nombre: " + nomAp);
         System.out.println("Usuario: " + user);
-        
-        System.out.println("\nIntroduzca su clave: ");
-        String key = scan.nextLine();
-        
-        String datos = "user="+user+"&dni="+nif+"&password="+key;
-          System.out.println(datos);      
-        String hash = od.hashSha1(datos);       
-        System.out.println(hash);
-        
-        String codificado = od.base64(hash);
-        System.out.println(codificado);
 
+        System.out.println("\nIntroduzca su clave: ");
+        key = scan.nextLine();
+
+        datos = user + nif + key;
+        System.out.println("Datos para hash= " + datos);
+
+        hash = od.hashSha1(datos);
+        System.out.println("Hash= " + hash);
+
+        user64 = od.base64(user);
+        nif64 = od.base64(nif);
+        hash64 = od.base64(hash);
+
+        datosEnviar = "user=" + user64 + "&dni=" + nif64 + "&hash=" + hash64;
+
+        System.out.println("Datos para envio= " + datosEnviar);
     }
 
 }
