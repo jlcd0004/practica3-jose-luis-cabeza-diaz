@@ -1,7 +1,5 @@
 
-import java.io.ByteArrayInputStream;
 import java.util.Scanner;
-import javax.xml.bind.DatatypeConverter;
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -15,12 +13,14 @@ public class Main {
 
     /**
      * @param args the command line arguments
+     * @throws java.lang.Exception
      */
     public static void main(String[] args) throws Exception {
 
         Scanner scan = new Scanner(System.in);
         ObtenerDatos od = new ObtenerDatos();
-        String user, nif, nomAp, key, datos, hash, datosEnviar, user64, nif64, hash64;
+        Autenticacion aut = new Autenticacion();
+        String user, nif, nomAp, key, datos, hash, datosEn, user64, nif64, hash64;
 
         nif = od.LeerNIF();
         nomAp = od.LeerNombreApell();
@@ -43,9 +43,13 @@ public class Main {
         nif64 = od.base64(nif);
         hash64 = od.base64(hash);
 
-        datosEnviar = "user=" + user64 + "&dni=" + nif64 + "&hash=" + hash64;
+        datosEn = "user=" + user64 + "&dni=" + nif64 + "&hash=" + hash64;
 
-        System.out.println("Datos para envio= " + datosEnviar);
+        System.out.println("Datos para envio= " + datosEn);
+        
+        System.out.println(aut.result(datosEn));
+        
+        
     }
 
 }

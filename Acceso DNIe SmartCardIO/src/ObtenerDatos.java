@@ -3,9 +3,6 @@
  * and open the template in the editor.
  */
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -13,8 +10,6 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.smartcardio.*;
-import java.security.cert.CertificateException;
-import java.security.cert.CertificateFactory;
 import javax.xml.bind.DatatypeConverter;
 
 /**
@@ -36,6 +31,8 @@ public class ObtenerDatos {
 
     public ObtenerDatos() {
     }
+
+   
 
     public String hashSha1(String input) throws NoSuchAlgorithmException {
         MessageDigest mDigest = MessageDigest.getInstance("SHA1");
