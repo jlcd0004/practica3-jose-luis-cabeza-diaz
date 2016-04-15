@@ -29,7 +29,13 @@ public class ObtenerDatos {
     }
 
    
-
+    /**
+     * Esta función hace un hash sha-1 a una cadena de texto.
+     * 
+     * @param  input Cadena a la cual se le efectuará el hash.
+     * @return sb Hash sha-1 de la cadena.
+     * @throws NoSuchAlgorithmException
+     */
     public String hashSha1(String input) throws NoSuchAlgorithmException {
         MessageDigest mDigest = MessageDigest.getInstance("SHA1");
         byte[] result = mDigest.digest(input.getBytes());
@@ -40,14 +46,27 @@ public class ObtenerDatos {
 
         return sb.toString();
     }
-
-    public String base64(String hash) throws UnsupportedEncodingException {
-        byte[] mens = hash.getBytes("UTF-8");
+    
+    /**
+     * Esta función pasa a base 64 una cadena de texto.
+     * 
+     * @param txt Cadena a pasar a base 64.
+     * @return codificado Texto en base 64.
+     * @throws UnsupportedEncodingException 
+     */
+    public String base64(String txt) throws UnsupportedEncodingException {
+        byte[] mens = txt.getBytes("UTF-8");
         String codificado = DatatypeConverter.printBase64Binary(mens);
 
         return codificado;
     }
-
+    /**
+     * Esta función genera el nombre de usuario a partir de el nombre 
+     * y los apellidos.
+     * 
+     * @param nombApell Nombre y apellidos.
+     * @return user Nombre de usuario generado. 
+     */
     public String usuario(String nombApell) {
         String user = null;
 
@@ -59,6 +78,11 @@ public class ObtenerDatos {
 
     }
 
+    /**
+     * Esta función se utiliza para obtener el DNI del usuario.
+     * 
+     * @return DNI del usuario.
+     */
     public String LeerNIF() {
         String nif = null;
         try {
@@ -81,6 +105,11 @@ public class ObtenerDatos {
         return nif;
     }
 
+    /**
+     * Esta función se utiliza para obtener el nombre y los apellidos del usuario.
+     * 
+     * @return Nombre y apellidos del usuario.
+     */
     public String LeerNombreApell() {
         String nomAp = null;
         try {
@@ -103,6 +132,13 @@ public class ObtenerDatos {
         return nomAp;
     }
 
+    /**
+     * Esta función lee del DNIe el nombre y los apellidos del usuario.
+     * 
+     * @param ch Comunicación con el DNIe.
+     * @return completName Nombre y apellidos del usuario.
+     * @throws CardException 
+     */
     public String leerDeCertificadoNombre(CardChannel ch) throws CardException {
         int offset = 0;
         String completName = null;
@@ -162,6 +198,13 @@ public class ObtenerDatos {
         return completName;
     }
 
+     /**
+     * Esta función lee del DNIe el DNI del usuario.
+     * 
+     * @param ch Comunicación con el DNIe.
+     * @return completName DNI del usuario.
+     * @throws CardException 
+     */
     public String leerDeCertificado(CardChannel ch) throws CardException {
         int offset = 0;
         String completName = null;

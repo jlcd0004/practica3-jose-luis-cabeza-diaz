@@ -3,11 +3,17 @@ import java.util.Scanner;
 
 /**
  *
- * @author toni
+ * @author Jose Luis
  */
 public class Main {
 
     /**
+     * En la función principal, haciendo uso de las funciones de las clases
+     * ObtenerDatos.java y Autenticacion.java, se obtienen los datos del
+     * DNIe del usuario y se le pide que introduzca su clave asi como que
+     * seleccione el tipo de autenticación deseada.
+     * Finalmente se muestra el resultado de la autenticación.
+     * 
      * @param args the command line arguments
      * @throws java.lang.Exception
      */
