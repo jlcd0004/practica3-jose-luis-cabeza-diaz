@@ -61,7 +61,7 @@ public class ObtenerDatos {
         return codificado;
     }
     /**
-     * Esta función genera el nombre de usuario a partir de el nombre 
+     * Esta función genera el nombre de usuario a partir del nombre 
      * y los apellidos.
      * 
      * @param nombApell Nombre y apellidos.
